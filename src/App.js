@@ -1,24 +1,52 @@
-import logo from './logo.svg';
+// src/App.js
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import FixturesPage from './pages/FixturesPage';
+import LeagueTablePage from './pages/LeagueTablePage';
+
 import './App.css';
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Load saved preference once
+  useEffect(() => {
+    const saved = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(saved);
+  }, []);
+
+  // Apply/remove .dark on body and persist
+  useEffect(() => {
+    document.body.classList.toggle('dark', darkMode);
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
+
+  const toggleDarkMode = () => setDarkMode(prev => !prev);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <header className="app-header">
+        <Navbar />
+        <button 
+          className="dark-toggle" 
+          onClick={toggleDarkMode}
+          aria-label="Toggle dark mode"
         >
-          Learn React
-        </a>
+          {darkMode ? '🌞 Light Mode' : '🌙 Dark Mode'}
+        </button>
       </header>
-    </div>
+
+      <main>
+        <Routes>
+          <Route path="/"        element={<Home />} />
+          <Route path="/fixtures" element={<FixturesPage />} />
+          <Route path="/table"    element={<LeagueTablePage />} />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 

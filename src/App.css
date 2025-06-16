@@ -1,38 +1,122 @@
-.App {
+:root {
+  /* Palette */
+  --bg:        #f4f6f8;
+  --card-bg:   #ffffff;
+  --nav-bg:    #24292e;
+  --text:      #333333;
+  --muted:     #6a737d;
+  --accent:    #0366d6;
+  --border:    #e1e4e8;
+
+  /* Sizing */
+  --radius:    8px;
+  --spacing:   1rem;
+}
+
+
+* {
+  box-sizing: border-box;
+  transition: background-color .2s, color .2s;
+}
+
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+
+.navbar {
+  display: flex;
+  gap: var(--spacing);
+  padding: var(--spacing);
+  background: var(--nav-bg);
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  color: var(--accent);
+}
+
+.fixtures,
+.live-matches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing);
+  padding: var(--spacing);
+}
+
+.match-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  cursor: pointer;
+}
+
+.match-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.match-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.match-card p {
+  margin: 0.25rem 0;
+  color: var(--muted);
+}
+
+.league-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--spacing);
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.league-table th,
+.league-table td {
+  padding: 0.75rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.league-table thead {
+  background: var(--accent);
+  color: #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.league-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.league-table tbody tr:hover {
+  background: #f0f4f8;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .fixtures,
+  .live-matches {
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: rotate(360deg);
+  .league-table th,
+  .league-table td {
+    font-size: 0.85rem;
+    padding: 0.5rem;
   }
 }
